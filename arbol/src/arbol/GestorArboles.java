@@ -73,26 +73,37 @@ public class GestorArboles {
         System.out.print("Origen: ");
         String origen = scanner.nextLine();
 
-        
-        try (Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/eh_garden", "root", "")) {
-            String consulta = "INSERT INTO arboles (id, nombre_comun, nombre_cientifico, habitat, altura, origen) VALUES (?, ?, ?, ?, ?, ?)";
+        final String HOST = "localhost";
+        final String BBDD = "eh_garden";
+        final String USERNAME = "root";
+        final String PASSWORD = "";
 
-            try (PreparedStatement statement = conexion.prepareStatement(consulta)) {
-                statement.setInt(1, id);
-                statement.setString(2, nombreComun);
-                statement.setString(3, nombreCientifico);
-                statement.setString(4, habitat);
-                statement.setInt(5, altura);
-                statement.setString(6, origen);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-                int filasAfectadas = statement.executeUpdate();
+            try (Connection conexion = DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BBDD, USERNAME, PASSWORD)) {
+                String consulta = "INSERT INTO arboles (id, nombre_comun, nombre_cientifico, habitat, altura, origen) VALUES (?, ?, ?, ?, ?, ?)";
 
-                if (filasAfectadas > 0) {
-                    System.out.println("Árbol insertado correctamente.");
-                } else {
-                    System.out.println("Error al insertar el árbol. Verifica los datos e intenta nuevamente.");
+                try (PreparedStatement statement = conexion.prepareStatement(consulta)) {
+                    statement.setInt(1, id);
+                    statement.setString(2, nombreComun);
+                    statement.setString(3, nombreCientifico);
+                    statement.setString(4, habitat);
+                    statement.setInt(5, altura);
+                    statement.setString(6, origen);
+
+                    int filasAfectadas = statement.executeUpdate();
+
+                    if (filasAfectadas > 0) {
+                        System.out.println("Árbol insertado correctamente.");
+                    } else {
+                        System.out.println("Error al insertar el árbol. Verifica los datos e intenta nuevamente.");
+                    }
                 }
             }
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error al cargar la librería mysql conector");
+            e.printStackTrace();
         } catch (SQLException e) {
             System.out.println("Error al conectar con la BBDD");
             e.printStackTrace();
@@ -108,6 +119,6 @@ public class GestorArboles {
     }
 
     public static void visualizarArboles() {
-       
+        
     }
 }
