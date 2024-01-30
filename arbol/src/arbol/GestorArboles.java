@@ -3,6 +3,7 @@ package arbol;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -130,10 +131,43 @@ public class GestorArboles {
     }    
 
     public static void modificarArbol(Connection connection) {
-        // Implementa la lógica para modificar la información de un árbol utilizando consultas SQL
+    	 Scanner scanner = new Scanner(System.in);
+         System.out.print("Ingrese el ID del árbol que desea modificar: ");
+         int idModificar = scanner.nextInt();
+         
+         
+    	
     }
 
     public static void visualizarArboles(Connection connection) {
-        // Implementa la lógica para visualizar los árboles utilizando consultas SQL y mostrar los resultados
+    	try {
+            String selectQuery = "SELECT * FROM arboles";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                System.out.println("Lista de Árboles:");
+
+                // Mostrar encabezados
+                System.out.printf("%-5s %-20s %-20s %-30s %-10s %-20s%n",
+                        "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen");
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                // Mostrar datos de árboles
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String nombreComun = resultSet.getString("nombre_comun");
+                    String nombreCientifico = resultSet.getString("nombre_cientifico");
+                    String habitat = resultSet.getString("habitat");
+                    int altura = resultSet.getInt("altura");
+                    String origen = resultSet.getString("origen");
+
+                    System.out.printf("%-5d %-20s %-20s %-30s %-10d %-20s%n",
+                            id, nombreComun, nombreCientifico, habitat, altura, origen);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al intentar visualizar los árboles");
+            e.printStackTrace();
+        }
     }
 }
