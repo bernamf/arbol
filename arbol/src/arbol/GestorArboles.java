@@ -41,18 +41,34 @@ public class GestorArboles {
 
                     switch (opcion) {
                         case 1:
+                        	System.out.println();
+                        	System.out.println();
                             insertarArbol(conexion);
+                            System.out.println();
+                            System.out.println();
                             break;
                         case 2:
+                        	System.out.println();
+                        	System.out.println();
                         	System.out.println("que arbol quieres eliminar para eso dime el id del albol");
                         	int eliminar = scanner.nextInt();
                             eliminarArbol(conexion, eliminar);
+                            System.out.println();
+                            System.out.println();
                             break;
                         case 3:
+                        	System.out.println();
+                        	System.out.println();
                             modificarArbol(conexion);
+                            System.out.println();
+                            System.out.println();
                             break;
                         case 4:
+                        	System.out.println();
+                        	System.out.println();
                             visualizarArboles(conexion);
+                            System.out.println();
+                            System.out.println();
                             break;
                         case 0:
                             System.out.println("Saliendo de la aplicación.");
@@ -148,9 +164,9 @@ public class GestorArboles {
                 System.out.println("Lista de Árboles:");
 
                 // Mostrar encabezados
-                System.out.printf("%-5s %-20s %-20s %-30s %-10s %-20s%n",
+                System.out.printf("%-5s %-20s %-25s %-120s %-10s %-20s%n",
                         "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen");
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 // Mostrar datos de árboles
                 while (resultSet.next()) {
@@ -161,7 +177,7 @@ public class GestorArboles {
                     int altura = resultSet.getInt("altura");
                     String origen = resultSet.getString("origen");
 
-                    System.out.printf("%-5d %-20s %-20s %-30s %-10d %-20s%n",
+                    System.out.printf("%-5d %-20s %-25s %-120s %-10d %-20s%n",
                             id, nombreComun, nombreCientifico, habitat, altura, origen);
                 }
             }
