@@ -1,6 +1,6 @@
 package arbol;
 
-public class Albol {
+public class Arbol {
 
 	private int id;
 	private String nombreComun;
@@ -9,7 +9,7 @@ public class Albol {
 	private int altura;
 	private String origen;
 	
-	public Albol(int id, String nombreComun, String nombreCientifico, String habitat, int altura, String origen) {
+	public Arbol(int id, String nombreComun, String nombreCientifico, String habitat, int altura, String origen) {
 		this.id = id;
 		this.nombreComun = nombreComun;
 		this.nombreCientifico = nombreCientifico;
@@ -18,7 +18,7 @@ public class Albol {
 		this.origen = origen;
 	}
 
-	public Albol() {
+	public Arbol() {
 		
 	}
 
