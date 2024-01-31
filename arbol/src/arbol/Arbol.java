@@ -1,5 +1,7 @@
 package arbol;
 
+import java.sql.Date;
+
 public class Arbol {
 
 	private int id;
@@ -9,13 +11,11 @@ public class Arbol {
 	private boolean singular;
 	private String origen;
 	private Habitad habitats;
-	
-	
+	private Date  fecha_encontrado;
 	
 	
 	public Arbol(int id, String nombreComun, String nombreCientifico, String habitat, boolean singular, String origen,
-			Habitad habitats) {
-		
+			Habitad habitats, Date fecha_encontrado) {
 		this.id = id;
 		this.nombreComun = nombreComun;
 		this.nombreCientifico = nombreCientifico;
@@ -23,9 +23,12 @@ public class Arbol {
 		this.singular = singular;
 		this.origen = origen;
 		this.habitats = habitats;
+		this.fecha_encontrado = fecha_encontrado;
 	}
-
-
+	
+	
+	public Arbol() {
+	}
 
 
 	public int getId() {
@@ -33,13 +36,9 @@ public class Arbol {
 	}
 
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 
 	public String getNombreComun() {
@@ -47,13 +46,9 @@ public class Arbol {
 	}
 
 
-
-
 	public void setNombreComun(String nombreComun) {
 		this.nombreComun = nombreComun;
 	}
-
-
 
 
 	public String getNombreCientifico() {
@@ -61,13 +56,9 @@ public class Arbol {
 	}
 
 
-
-
 	public void setNombreCientifico(String nombreCientifico) {
 		this.nombreCientifico = nombreCientifico;
 	}
-
-
 
 
 	public String getHabitat() {
@@ -75,13 +66,9 @@ public class Arbol {
 	}
 
 
-
-
 	public void setHabitat(String habitat) {
 		this.habitat = habitat;
 	}
-
-
 
 
 	public boolean isSingular() {
@@ -89,13 +76,9 @@ public class Arbol {
 	}
 
 
-
-
 	public void setSingular(boolean singular) {
 		this.singular = singular;
 	}
-
-
 
 
 	public String getOrigen() {
@@ -103,13 +86,9 @@ public class Arbol {
 	}
 
 
-
-
 	public void setOrigen(String origen) {
 		this.origen = origen;
 	}
-
-
 
 
 	public Habitad getHabitats() {
@@ -117,25 +96,28 @@ public class Arbol {
 	}
 
 
-
-
 	public void setHabitats(Habitad habitats) {
 		this.habitats = habitats;
 	}
 
 
+	public Date getFecha_encontrado() {
+		return fecha_encontrado;
+	}
+
+
+	public void setFecha_encontrado(Date fecha_encontrado) {
+		this.fecha_encontrado = fecha_encontrado;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Arbol [id=" + id + ", nombreComun=" + nombreComun + ", nombreCientifico=" + nombreCientifico
 				+ ", habitat=" + habitat + ", singular=" + singular + ", origen=" + origen + ", habitats=" + habitats
-				+ "]";
+				+ ", fecha_encontrado=" + fecha_encontrado + "]";
 	}
-
 	
-	
-
 	
 	
 	
