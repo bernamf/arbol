@@ -170,15 +170,15 @@ public class GestorArboles {
 
                 // Mostrar datos de árboles
                 while (resultSet.next()) {
+                	Habitad habitats =  new Habitad();
+                	int idHabitat = resultSet.getInt("id");
                     int id = resultSet.getInt("id");
                     String nombreComun = resultSet.getString("nombre_comun");
                     String nombreCientifico = resultSet.getString("nombre_cientifico");
-                    String habitat = resultSet.getString("habitat");
                     int altura = resultSet.getInt("altura");
                     String origen = resultSet.getString("origen");
-
                     System.out.printf("%-5d %-20s %-25s %-120s %-10d %-20s%n",
-                            id, nombreComun, nombreCientifico, habitat, altura, origen);
+                            id, nombreComun, nombreCientifico, habitats, altura, origen);
                 }
             }
         } catch (SQLException e) {
