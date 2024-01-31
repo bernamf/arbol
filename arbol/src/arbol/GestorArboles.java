@@ -19,7 +19,7 @@ public class GestorArboles {
         int opcion;
 
         final String HOST = "localhost";
-        final String BBDD = "eh_garden";
+        final String BBDD = "eh_garden2";
         final String USERNAME = "root";
         final String PASSWORD = "";
 
@@ -164,21 +164,23 @@ public class GestorArboles {
                 System.out.println("Lista de Árboles:");
 
                 // Mostrar encabezados
-                System.out.printf("%-5s %-20s %-25s %-120s %-10s %-20s%n",
+                System.out.printf("%-5s %-20s %-25s %-120s %-10s %-20s% %-10s %-10sn",
                         "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen");
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 // Mostrar datos de árboles
                 while (resultSet.next()) {
                 	Habitad habitats =  new Habitad();
-                	int idHabitat = resultSet.getInt("id");
+                	 habitats.setNombre(resultSet.getString("nombre"));
                     int id = resultSet.getInt("id");
                     String nombreComun = resultSet.getString("nombre_comun");
                     String nombreCientifico = resultSet.getString("nombre_cientifico");
                     int altura = resultSet.getInt("altura");
                     String origen = resultSet.getString("origen");
-                    System.out.printf("%-5d %-20s %-25s %-120s %-10d %-20s%n",
-                            id, nombreComun, nombreCientifico, habitats, altura, origen);
+                    boolean singular= resultSet.getBoolean("singular");
+                    String fecha = resultSet.getString("fecha_encontrado");
+                    System.out.printf("%-5d %-20s %-25s %-120s %-10d %-20s% %-10s %-10sn",
+                            id, nombreComun, nombreCientifico, habitats.getNombre(), altura, origen, singular, fecha);
                 }
             }
         } catch (SQLException e) {
