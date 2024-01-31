@@ -157,7 +157,7 @@ public class GestorArboles {
 
     public static void visualizarArboles(Connection connection) {
     	try {
-            String selectQuery = "SELECT * FROM arboles inner join habitat on id_habitat = id";
+            String selectQuery = "SELECT * FROM arboles inner join habitat on arboles.id_habitat = habitat.id";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
