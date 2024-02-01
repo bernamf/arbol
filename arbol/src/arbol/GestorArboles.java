@@ -89,7 +89,7 @@ public class GestorArboles {
 
     public static void insertarArbol(Connection connection) {
         try {
-            String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, id_habitat, altura, origen, singular, fecha_encontrada) VALUES (?, ?, ?, ?, ?)";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 
