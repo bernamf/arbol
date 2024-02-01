@@ -30,7 +30,7 @@ public class GestorArboles {
             try (Connection conexion = DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BBDD, USERNAME, PASSWORD)) {
                 do {
                     System.out.println("Menú Principal:");
-                    System.out.println("1. Quieres insertar un árbol o un habitat");
+                    System.out.println("1. Insertar ");
                     System.out.println("2. Eliminar árbol");
                     System.out.println("3. Modificar información del árbol");
                     System.out.println("4. Visualizar árboles");
@@ -42,8 +42,13 @@ public class GestorArboles {
                     switch (opcion) {
                         case 1:
                         	System.out.println();
-                        	System.out.println();
-                            insertarArbol(conexion);
+                        	System.out.println("Quieres insertar un habitat o un arbol");
+							String opcion2 = scanner.nextLine();
+							if (opcion2.equalsIgnoreCase("habitat")) {
+							    insertarHabitat(conexion);
+							} else {
+							    insertarArbol(conexion);
+							}
                             System.out.println();
                             System.out.println();
                             break;
@@ -86,11 +91,37 @@ public class GestorArboles {
             e.printStackTrace();
         }
     }
+    
+public static void insertarHabitat(Connection connection) {
+    
+    	
+        try {
+            String insertQuery = "INSERT INTO habitat (id, nombre) VALUES (?, ?)";
+            
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Ingrese los detalles del habitat:");
+                System.out.print("Id de habitat: ");
+                preparedStatement.setInt(1, scanner.nextInt());
+
+                System.out.print("Nombre : ");
+                preparedStatement.setString(2, scanner.nextLine());
+
+
+                // Ejecutar la inserción
+                preparedStatement.executeUpdate();
+                System.out.println("Habiat insertado correctamente.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al intentar insertar el habitat");
+            e.printStackTrace();
+        }
+    }
 
     public static void insertarArbol(Connection connection) {
-    	
-    	
-    	
+    
     	
         try {
             String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, id_habitat, altura, origen, singular, fecha_encontrado) VALUES (?, ?, ?, ?, ?, ?, ?)";
