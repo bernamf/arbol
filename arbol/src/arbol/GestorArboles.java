@@ -106,8 +106,10 @@ public static void insertarHabitat(Connection connection) {
                 System.out.print("Id de habitat: ");
                 preparedStatement.setInt(1, scanner.nextInt());
 
-                System.out.print("Nombre : ");
-                preparedStatement.setString(2, scanner.nextLine());
+                scanner.nextLine();
+             
+                System.out.print("Nombre: ");
+                preparedStatement.setString(2, scanner.nextLine());   
 
 
                 // Ejecutar la inserción
