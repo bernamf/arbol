@@ -156,30 +156,30 @@ public class GestorArboles {
     }
 
     public static void visualizarArboles(Connection connection) {
-    	try {
-            String selectQuery = "SELECT * FROM arboles inner join habitat on arboles.id_habitat = habitat.id";
+        try {
+            String selectQuery = "SELECT * FROM arboles INNER JOIN habitat ON arboles.id_habitat = habitat.id";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 System.out.println("Lista de Árboles:");
 
                 // Mostrar encabezados
-                System.out.printf("%-5s %-20s %-25s %-120s %-10s %-20s% %-10s %-10sn",
-                        "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen");
-                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-5s %-20s %-25s %-20s %-10s %-20s %-10s %-10s%n",
+                        "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen", "Singular", "Fecha Encontrado");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 // Mostrar datos de árboles
                 while (resultSet.next()) {
-                	Habitad habitats =  new Habitad();
-                	 habitats.setNombre(resultSet.getString("nombre"));
+                    Habitad habitats = new Habitad();
+                    habitats.setNombre(resultSet.getString("nombre"));
                     int id = resultSet.getInt("id");
                     String nombreComun = resultSet.getString("nombre_comun");
                     String nombreCientifico = resultSet.getString("nombre_cientifico");
                     int altura = resultSet.getInt("altura");
                     String origen = resultSet.getString("origen");
-                    boolean singular= resultSet.getBoolean("singular");
+                    boolean singular = resultSet.getBoolean("singular");
                     String fecha = resultSet.getString("fecha_encontrado");
-                    System.out.printf("%-5d %-20s %-25s %-120s %-10d %-20s% %-10s %-10sn",
+                    System.out.printf("%-5d %-20s %-25s %-20s %-10d %-20s %-10b %-10s%n",
                             id, nombreComun, nombreCientifico, habitats.getNombre(), altura, origen, singular, fecha);
                 }
             }
@@ -188,4 +188,5 @@ public class GestorArboles {
             e.printStackTrace();
         }
     }
+
 }
