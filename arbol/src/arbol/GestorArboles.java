@@ -19,7 +19,7 @@ public class GestorArboles {
         int opcion;
 
         final String HOST = "localhost";
-        final String BBDD = "eh_garden";
+        final String BBDD = "eh_garden2";
         final String USERNAME = "root";
         final String PASSWORD = "";
 
@@ -89,7 +89,7 @@ public class GestorArboles {
 
     public static void insertarArbol(Connection connection) {
         try {
-            String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, habitat, altura, origen) VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, id_habitat, altura, origen, singular, fecha_encontrada) VALUES (?, ?, ?, ?, ?)";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 
@@ -156,29 +156,31 @@ public class GestorArboles {
     }
 
     public static void visualizarArboles(Connection connection) {
-    	try {
-            String selectQuery = "SELECT * FROM arboles";
+        try {
+            String selectQuery = "SELECT * FROM arboles INNER JOIN habitat ON arboles.id_habitat = habitat.id";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 System.out.println("Lista de Árboles:");
 
                 // Mostrar encabezados
-                System.out.printf("%-5s %-20s %-25s %-120s %-10s %-20s%n",
-                        "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen");
-                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-5s %-20s %-25s %-20s %-10s %-20s %-10s %-10s%n",
+                        "ID", "Nombre Común", "Nombre Científico", "Habitat", "Altura", "Origen", "Singular", "Fecha Encontrado");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 // Mostrar datos de árboles
                 while (resultSet.next()) {
+                    Habitad habitats = new Habitad();
+                    habitats.setNombre(resultSet.getString("nombre"));
                     int id = resultSet.getInt("id");
                     String nombreComun = resultSet.getString("nombre_comun");
                     String nombreCientifico = resultSet.getString("nombre_cientifico");
-                    String habitat = resultSet.getString("habitat");
                     int altura = resultSet.getInt("altura");
                     String origen = resultSet.getString("origen");
-
-                    System.out.printf("%-5d %-20s %-25s %-120s %-10d %-20s%n",
-                            id, nombreComun, nombreCientifico, habitat, altura, origen);
+                    boolean singular = resultSet.getBoolean("singular");
+                    String fecha = resultSet.getString("fecha_encontrado");
+                    System.out.printf("%-5d %-20s %-25s %-20s %-10d %-20s %-10b %-10s%n",
+                            id, nombreComun, nombreCientifico, habitats.getNombre(), altura, origen, singular, fecha);
                 }
             }
         } catch (SQLException e) {
@@ -186,4 +188,5 @@ public class GestorArboles {
             e.printStackTrace();
         }
     }
+
 }
