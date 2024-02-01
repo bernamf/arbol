@@ -30,7 +30,7 @@ public class GestorArboles {
             try (Connection conexion = DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BBDD, USERNAME, PASSWORD)) {
                 do {
                     System.out.println("Menú Principal:");
-                    System.out.println("1. Insertar árbol");
+                    System.out.println("1. Quieres insertar un árbol o un habitat");
                     System.out.println("2. Eliminar árbol");
                     System.out.println("3. Modificar información del árbol");
                     System.out.println("4. Visualizar árboles");
@@ -88,8 +88,13 @@ public class GestorArboles {
     }
 
     public static void insertarArbol(Connection connection) {
+    	
+    	
+    	
+    	
         try {
-            String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, id_habitat, altura, origen, singular, fecha_encontrada) VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO arboles (nombre_comun, nombre_cientifico, id_habitat, altura, origen, singular, fecha_encontrado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 
@@ -101,15 +106,25 @@ public class GestorArboles {
                 System.out.print("Nombre Científico: ");
                 preparedStatement.setString(2, scanner.nextLine());
 
-                System.out.print("Habitat: ");
-                preparedStatement.setString(3, scanner.nextLine());
+                System.out.print("id_habitat: ");
+                preparedStatement.setInt(3, scanner.nextInt());
 
                 System.out.print("Altura: ");
                 preparedStatement.setInt(4, scanner.nextInt());
-                scanner.nextLine(); // Consumir la nueva línea después de nextInt()
+                scanner.nextLine(); 
 
                 System.out.print("Origen: ");
                 preparedStatement.setString(5, scanner.nextLine());
+                
+                System.out.print("Singular: ");
+                preparedStatement.setBoolean(6, scanner.nextBoolean());
+                
+                System.out.print("Fecha (en formato YYYY-MM-DD): ");
+                scanner.nextLine(); 
+                preparedStatement.setString(7, scanner.nextLine());
+
+                
+                
 
                 // Ejecutar la inserción
                 preparedStatement.executeUpdate();
@@ -159,6 +174,7 @@ public class GestorArboles {
         try {
             String selectQuery = "SELECT * FROM arboles INNER JOIN habitat ON arboles.id_habitat = habitat.id";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+            		
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 System.out.println("Lista de Árboles:");
