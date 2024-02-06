@@ -195,13 +195,74 @@ public static void insertarHabitat(Connection connection) {
     }    
 
     public static void modificarArbol(Connection connection) {
-    	 Scanner scanner = new Scanner(System.in);
-         System.out.print("Ingrese el ID del árbol que desea modificar: ");
-         int idModificar = scanner.nextInt();
-         
-         
-    	
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el ID del árbol que desea modificar: ");
+        int idModificar = scanner.nextInt();
+
+        try {
+            // Verificar si el árbol con el ID proporcionado existe antes de continuar
+            String selectQuery = "SELECT * FROM arboles WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setInt(1, idModificar);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    // El árbol existe, solicitar los nuevos detalles
+                    System.out.println("Ingrese los nuevos detalles del árbol:");
+                   
+                    System.out.print("Nuevo Nombre Común: ");
+                    String nuevoNombreComun = scanner.nextLine();
+
+                    System.out.print("Nuevo Nombre Científico: ");
+                    String nuevoNombreCientifico = scanner.nextLine();
+
+                    System.out.print("Nuevo id_habitat: ");
+                    int nuevoIdHabitat = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Nueva Altura: ");
+                    int nuevaAltura = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Nuevo Origen: ");
+                    String nuevoOrigen = scanner.nextLine();
+
+                    System.out.print("¿Es singular? (true/false): ");
+                    boolean nuevoSingular = Boolean.parseBoolean(scanner.nextLine());
+
+                    System.out.print("Nueva Fecha Encontrado (en formato YYYY-MM-DD): ");
+                    String nuevaFechaEncontrado = scanner.nextLine();
+
+                    // Actualizar el árbol en la base de datos
+                    String updateQuery = "UPDATE arboles SET nombre_comun = ?, nombre_cientifico = ?, id_habitat = ?, altura = ?, origen = ?, singular = ?, fecha_encontrado = ? WHERE id = ?";
+                    try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+                        updateStatement.setString(1, nuevoNombreComun);
+                        updateStatement.setString(2, nuevoNombreCientifico);
+                        updateStatement.setInt(3, nuevoIdHabitat);
+                        updateStatement.setInt(4, nuevaAltura);
+                        updateStatement.setString(5, nuevoOrigen);
+                        updateStatement.setBoolean(6, nuevoSingular);
+                        updateStatement.setString(7, nuevaFechaEncontrado);
+                        updateStatement.setInt(8, idModificar);
+
+                        // Ejecutar la actualización
+                        int rowsAffected = updateStatement.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("Árbol modificado correctamente.");
+                        } else {
+                            System.out.println("No se encontró el árbol con el ID especificado.");
+                        }
+                    }
+                } else {
+                    // El árbol no existe en la base de datos
+                    System.out.println("No se encontró el árbol con el ID especificado.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al intentar modificar el árbol");
+            e.printStackTrace();
+        }
     }
+
+
 
     public static void visualizarArboles(Connection connection) {
         try {
