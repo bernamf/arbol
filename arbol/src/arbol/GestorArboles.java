@@ -209,12 +209,15 @@ public static void insertarHabitat(Connection connection) {
                 if (resultSet.next()) {
                     // El árbol existe, solicitar los nuevos detalles
                     System.out.println("Ingrese los nuevos detalles del árbol:");
+                    scanner.nextLine();
                    
-                    System.out.print("Nuevo Nombre Común: ");
+                    System.out.print("Nuevo Nombre Común: "); 
                     String nuevoNombreComun = scanner.nextLine();
+                    
 
                     System.out.print("Nuevo Nombre Científico: ");
                     String nuevoNombreCientifico = scanner.nextLine();
+                    
 
                     System.out.print("Nuevo id_habitat: ");
                     int nuevoIdHabitat = Integer.parseInt(scanner.nextLine());
